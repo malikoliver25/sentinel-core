@@ -1,0 +1,15 @@
+# =============================================================================
+# sentinel-core — production dependencies
+# =============================================================================
+
+# Web framework
+fastapi>=0.115.0,<1.0.0
+uvicorn[standard]>=0.30.0,<1.0.0
+
+# Data validation
+pydantic>=2.7.0,<3.0.0
+
+# AI orchestration
+langgraph>=0.2.0,<1.0.0
+langchain-core>=0.3.0,<1.0.0
+langchain-openai>=0.2.0,<1.0.0

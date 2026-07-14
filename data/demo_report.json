@@ -1,0 +1,107 @@
+Sending POST request to http://127.0.0.1:8000/analyze...
+
+Response Status Code: 200
+
+{
+  "report_id": "47ca0914-d796-4514-b2b1-d67c2e09aebb",
+  "report_name": "Attack Path Report \u2014 scan 123e4567-e89b-12d3-a456-426614174000",
+  "generated_at": "2026-07-14T10:07:31.819022Z",
+  "generated_by": "sentinel-core/analysis-graph v0.1.0",
+  "source_scan_ids": [
+    "123e4567-e89b-12d3-a456-426614174000"
+  ],
+  "scope_description": "Hosts in scope: 192.168.1.0/24. Scanner: Nmap + OpenVAS.",
+  "attack_paths": [
+    {
+      "path_id": "f1b26d97-fedc-491d-b2c6-daee553806d4",
+      "path_label": "[STUB] External \u2192 prod-db-01 via CVE-2017-0144",
+      "steps": [
+        {
+          "step_index": 0,
+          "technique_id": "T1190",
+          "technique_name": "Exploit Public-Facing Application",
+          "tactic": "TA0001",
+          "source_address": null,
+          "destination_address": {
+            "ipv4": "192.168.1.100",
+            "ipv6": null,
+            "subnet": null,
+            "hostname": "prod-db-01",
+            "mac_address": null
+          },
+          "destination_port": 445,
+          "exploited_vulnerability": {
+            "vuln_id": "CVE-2017-0144",
+            "title": "Windows SMB Remote Code Execution Vulnerability",
+            "description": "A remote code execution vulnerability exists in the way that the Microsoft Server Message Block 1.0 (SMBv1) server handles certain requests. An attacker who successfully exploited the vulnerability could gain the ability to execute code on the target server.",
+            "severity": "critical",
+            "cvss_score": 9.3,
+            "cvss_vector": "AV:N/AC:M/Au:N/C:C/I:C/A:C",
+            "cvss_version": "2.0",
+            "cwe_ids": [
+              "CWE-20"
+            ],
+            "affected_port": 445,
+            "affected_service": "smb",
+            "exploit_available": true,
+            "patch_available": true,
+            "remediation": "Apply Microsoft Security Bulletin MS17-010.",
+            "references": [
+              "https://nvd.nist.gov/vuln/detail/CVE-2017-0144"
+            ],
+            "first_seen": null
+          },
+          "preconditions": [
+            "Port 445 reachable from internet",
+            "CVE-2017-0144 unpatched on target"
+          ],
+          "postconditions": [
+            "Remote code execution on prod-db-01",
+            "Initial foothold established"
+          ],
+          "likelihood": 0.93,
+          "detection_coverage": null,
+          "notes": "Stub path \u2014 tool_interface_node placeholder"
+        }
+      ],
+      "entry_point": {
+        "ipv4": "192.168.1.100",
+        "ipv6": null,
+        "subnet": null,
+        "hostname": "prod-db-01",
+        "mac_address": null
+      },
+      "target_asset": {
+        "ipv4": "192.168.1.100",
+        "ipv6": null,
+        "subnet": null,
+        "hostname": "prod-db-01",
+        "mac_address": null
+      },
+      "objective": "Remote code execution via CVE-2017-0144 (Windows SMB Remote Code Execution Vulnerability)",
+      "overall_likelihood": 0.93,
+      "overall_severity": "critical",
+      "hop_count": 1,
+      "mitre_tactics": [
+        "TA0001"
+      ]
+    }
+  ],
+  "total_paths_found": 1,
+  "critical_paths": 1,
+  "assets_at_risk": [
+    {
+      "ipv4": "192.168.1.100",
+      "ipv6": null,
+      "subnet": null,
+      "hostname": "prod-db-01",
+      "mac_address": null
+    }
+  ],
+  "recommendations": [
+    "[CRITICAL] Apply Microsoft Security Bulletin MS17-010. (breaks path: [STUB] External \u2192 prod-db-01 via CVE-2017-0144)",
+    "[TOOL FINDING] Result of 'Execute Nmap service version detection & Exploit validation for CVE-2017-0144': Version detected: smb, Exploit validated: True \u2014 Review system configuration for CVE-2017-0144."
+  ],
+  "executive_summary": "Sentinel-Core analysis of scan '123e4567-e89b-12d3-a456-426614174000' identified 3 vulnerability/ies across 2 host(s). 1 exploitable attack path(s) were mapped, of which 1 are rated CRITICAL. Immediate remediation is required for 1 asset(s) at risk. (Note: this summary was generated via offline fallback.)",
+  "analyst_notes": "== Agent Node Log ==\nanalyzer_node: 3 vulnerability/ies identified (1 CVE-sourced, 2 port-rule); LLM reasoning offline fallback\ntool_interface_node: simulated 1 tool execution(s), synthesised 1 attack path(s) from 1 critical/high vulnerability/ies\n\n== Analyzer Reasoning ==\n[OFFLINE FALLBACK \u2014 OPENAI_API_KEY not set or LLM call failed] Scan '123e4567-e89b-12d3-a456-426614174000' covered 2 host(s). 3 vulnerability/ies were identified (1 critical, 1 low, 1 medium). Port-based detections: Port 22/tcp (ssh) OPEN on prod-db-01 \u2014 rule SENTINEL-PORT-022-192.168.1.100 fired; Port 21/tcp (ftp) OPEN on legacy-ftp-server \u2014 rule SENTINEL-PORT-021-192.168.1.25 fired. Downstream nodes will use identified_vulnerabilities for path analysis."
+}
